@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
-from app import JobSeeker 
+from main import JobSeeker 
 
 # Load environment variables
 load_dotenv()
