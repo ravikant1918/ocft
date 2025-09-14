@@ -52,9 +52,9 @@ class JobSeeker:
         """
         Initializes the JobSeeker with configuration from environment variables and loads the Excel file.
         """
-        run_by_excel = True
+        run_by_excel = False
         df = None
-        self.api_key = os.getenv('API_KEY', 'af836ff9f20d62b1db06fb4151233136')
+        self.api_key = os.getenv('PROSPEO_API_KEY', 'af836ff9f20d62b1db06fb4151233136')
         self.base_url = 'https://api.prospeo.io'
         self.headers = {
             'Content-Type': 'application/json',
@@ -163,8 +163,8 @@ class JobSeeker:
             logger.error(f"Failed to save Excel file: {e}")
 
         
-if __name__ == '__main__':
-    banner = DisplayBanner()
-    banner.display()
-    job_seeker = JobSeeker()
-    job_seeker.run()
+# if __name__ == '__main__':
+#     banner = DisplayBanner()
+#     banner.display()
+#     job_seeker = JobSeeker()
+#     job_seeker.run()
