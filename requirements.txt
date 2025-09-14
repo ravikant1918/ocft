@@ -1,0 +1,6 @@
+requests>=2.28.0
+pandas>=1.4.0
+colorama>=0.4.4
+urllib3>=1.26.0
+python-dotenv>=0.20.0
+openpyxl>=3.0.10  # Required for pandas to read/write Excel files
