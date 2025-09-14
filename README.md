@@ -14,6 +14,37 @@ OCFT (Organization Contact Finder Tool) is a Python-based utility designed to he
 - **Excel Integration**: Automatically updates your Excel spreadsheet with the discovered information
 - **User-Friendly Output**: Colorful console interface with clear status messages and progress tracking
 
+## 🤖 How to Create a Telegram Bot and Get Its Token
+
+To use the Telegram bot features in OCFT, you need to create your own Telegram bot and obtain its token:
+
+1. Open the Telegram app and search for "BotFather".
+2. Start a chat with BotFather and send the command `/newbot`.
+3. Follow the instructions to choose a name and username for your bot.
+4. After creation, BotFather will provide you with a bot token (a string like `123456789:ABCdefGhIJKlmNoPQRstuVwXyZ`).
+5. Copy this token and add it to your `.env` file as follows:
+   ```
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+   ```
+
+Keep your Telegram bot token secure and do not share it publicly.
+
+## 🗝️🗝 How to Create a PROSPEO API key
+
+To use OCFT, you need a valid Prospeo API key. Follow these steps to obtain one:
+
+1. Visit the Prospeo website: [https://prospeo.io](https://prospeo.io)
+2. Sign up for a free account or log in if you already have one.
+3. Navigate to your dashboard or account settings.
+4. Look for the "API Keys" section.
+5. Click "Generate API Key" and copy the key provided.
+6. Add this key to your `.env` file as follows:
+   ```
+   PROSPEO_API_KEY=your_prospeo_api_key_here
+   ```
+
+Keep your API key secure and do not share it publicly.
+
 ## 📋 Requirements
 
 - Python 3.6+
