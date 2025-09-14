@@ -142,7 +142,7 @@ class JobSeeker:
             
             # Call Mobile Finder API
             mobile_resp = self.call_prospeo_mobile_finder()
-            mobile = mobile_resp['response']['mobile'] if isinstance(mobile_resp, dict) and 'response' in mobile_resp and isinstance(mobile_resp['response'], dict) else ''
+            mobile = mobile_resp['response']['raw_format'] if isinstance(mobile_resp, dict) and 'response' in mobile_resp and isinstance(mobile_resp['response'], dict) else ''
 
             logger.info(Fore.GREEN + f" --> Found Email: {email}, Number: {mobile}")
 
