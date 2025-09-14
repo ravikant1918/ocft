@@ -42,6 +42,7 @@ class DisplayBanner:
             print(line)
         time.sleep(1)
 
+
 class JobSeeker:
     """
     Main class for processing job seeker data, calling APIs to find emails and phone numbers,
@@ -51,7 +52,8 @@ class JobSeeker:
         """
         Initializes the JobSeeker with configuration from environment variables and loads the Excel file.
         """
-        self.excel_file = os.getenv('EXCEL_FILE', 'data.xlsx')
+        run_by_excel = True
+        df = None
         self.api_key = os.getenv('API_KEY', 'af836ff9f20d62b1db06fb4151233136')
         self.base_url = 'https://api.prospeo.io'
         self.headers = {
@@ -59,7 +61,9 @@ class JobSeeker:
             'X-KEY': self.api_key
         }
         try:
-            df = pd.read_excel(self.excel_file)
+            if run_by_excel:
+                self.excel_file = os.getenv('EXCEL_FILE', 'data.xlsx')
+                df = pd.read_excel(self.excel_file)
             logger.info(f"📂 Loaded Excel file: {self.excel_file}")
         except Exception as e:
             logger.error(f"Failed to load Excel file: {e}")
@@ -100,17 +104,18 @@ class JobSeeker:
             logger.error(f"Email Finder API call failed: {e}")
             return {'error': True}
 
-    def call_prospeo_mobile_finder(self):
+    def call_prospeo_mobile_finder(self, linkedin_url=None):
         """
         Calls the Prospeo Mobile Finder API using the current row's LinkedIn URL.
         Returns the API response as a dict.
         """
         MOBILE_FINDER_URL = f"{self.base_url}/mobile-finder"
-        data = {'url': self.linkedin_url}
+        data = {'url': linkedin_url}
         try:
-            response_json = self.api_executions(data, MOBILE_FINDER_URL)
-            logger.debug(f"Mobile Finder Response: {response_json}")
-            return response_json
+            mobile_resp = self.api_executions(data, MOBILE_FINDER_URL)
+            logger.debug(f"Mobile Finder Response: {mobile_resp}")
+            mobile = mobile_resp['response']['national_format'] if isinstance(mobile_resp, dict) and 'response' in mobile_resp and isinstance(mobile_resp['response'], dict) else ''
+            return mobile
         except Exception as e:
             logger.error(f"Mobile Finder API call failed: {e}")
             return {'error': True}
@@ -141,8 +146,7 @@ class JobSeeker:
             email = email_resp['response']['email'] if isinstance(email_resp, dict) and 'response' in email_resp and isinstance(email_resp['response'], dict) else ''
             
             # Call Mobile Finder API
-            mobile_resp = self.call_prospeo_mobile_finder()
-            mobile = mobile_resp['response']['raw_format'] if isinstance(mobile_resp, dict) and 'response' in mobile_resp and isinstance(mobile_resp['response'], dict) else ''
+            mobile = self.call_prospeo_mobile_finder(linkedin_url=self.linkedin_url )
 
             logger.info(Fore.GREEN + f" --> Found Email: {email}, Number: {mobile}")
 
